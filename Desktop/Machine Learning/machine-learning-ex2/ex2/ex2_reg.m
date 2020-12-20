@@ -24,7 +24,7 @@ clear ; close all; clc
 %  The first two columns contains the X values and the third column
 %  contains the label (y).
 
-data = load('ex2data2copy.txt');
+data = load('ex2data2.txt');
 X = data(:, [1, 2]); y = data(:, 3);
 
 plotData(X, y);
@@ -55,8 +55,13 @@ hold off;
 
 % Note that mapFeature also adds a column of ones for us, so the intercept
 % term is handled
+printf('X size before adding polynomial features:\n');
+disp(size(X));
+pause;
 X = mapFeature(X(:,1), X(:,2));
-
+printf('X size after adding features:\n');
+disp(size(X));
+pause;
 % Initialize fitting parameters
 initial_theta = zeros(size(X, 2), 1);
 
@@ -65,8 +70,10 @@ lambda = 1;
 
 % Compute and display initial cost and gradient for regularized logistic
 % regression
-[cost, grad] = costFunctionReg(initial_theta, X, y, lambda);
+printf('Call 1:\n');
 
+[cost, grad] = costFunctionReg(initial_theta, X, y, lambda);
+pause;
 fprintf('Cost at initial theta (zeros): %f\n', cost);
 fprintf('Expected cost (approx): 0.693\n');
 fprintf('Gradient at initial theta (zeros) - first five values only:\n');
@@ -80,8 +87,9 @@ pause;
 % Compute and display cost and gradient
 % with all-ones theta and lambda = 10
 test_theta = ones(size(X,2),1);
+printf('Call 2:\n');
 [cost, grad] = costFunctionReg(test_theta, X, y, 10);
-
+pause;
 fprintf('\nCost at test theta (with lambda = 10): %f\n', cost);
 fprintf('Expected cost (approx): 3.16\n');
 fprintf('Gradient at test theta - first five values only:\n');
@@ -111,7 +119,7 @@ lambda = 1;
 
 % Set Options
 options = optimset('GradObj', 'on', 'MaxIter', 400);
-
+printf('Call 3 fminunc:\n');
 % Optimize
 [theta, J, exit_flag] = ...
 	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);

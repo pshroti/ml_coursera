@@ -31,6 +31,6 @@ J = (-y' * log(fun) - (1 - y')*log(1 - fun)) / m;
 grad = X' * (fun - y) / m;
 %[m, n] = size(X);
 %%printf('theta:\n');
-% disp(theta); % if you want to display an array in a propoer format
+% disp(theta); % if you want to display an array in a proper format
 % =============================================================
 end
